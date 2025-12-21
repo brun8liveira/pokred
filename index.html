@@ -17,12 +17,12 @@ html, body {
 #start {
   position: fixed;
   inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   background: black;
   color: white;
   font-size: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   z-index: 10;
 }
 </style>
@@ -30,23 +30,33 @@ html, body {
 
 <body>
 
-<div id="start">▶ Tocar para jogar</div>
+<div id="start">▶ Toque para jogar</div>
 <div id="game"></div>
 
 <script>
-document.getElementById("start").addEventListener("click", () => {
+document.getElementById("start").addEventListener("click", async () => {
+
+  // 🔓 Desbloqueia áudio (OBRIGATÓRIO no iOS)
+  const AudioContext = window.AudioContext || window.webkitAudioContext;
+  const audioCtx = new AudioContext();
+  await audioCtx.resume();
+
   document.getElementById("start").remove();
 
-  window.EJS_player = "#game";
-  window.EJS_core = "gba";
-  window.EJS_gameUrl = "roms/pokred.zip";
-  window.EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
-  window.EJS_threads = false;
-  window.EJS_startOnLoaded = true;
+  // ⏱️ Delay necessário pro Safari
+  setTimeout(() => {
 
-  const script = document.createElement("script");
-  script.src = "https://cdn.emulatorjs.org/stable/loader.js";
-  document.body.appendChild(script);
+    window.EJS_player = "#game";
+    window.EJS_core = "gba";
+    window.EJS_gameUrl = "roms/pokred.zip";
+    window.EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
+    window.EJS_threads = false;
+
+    const script = document.createElement("script");
+    script.src = "https://cdn.emulatorjs.org/stable/loader.js";
+    document.body.appendChild(script);
+
+  }, 300);
 });
 </script>
 
