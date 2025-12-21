@@ -15,7 +15,21 @@
     }
   }, { once: true });
 </script>
-
+  
+<script>
+  if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+    const hint = document.createElement("div");
+    hint.innerText = "💡 No iPhone, jogue na horizontal para melhor experiência";
+    hint.style.position = "fixed";
+    hint.style.bottom = "10px";
+    hint.style.width = "100%";
+    hint.style.textAlign = "center";
+    hint.style.color = "#aaa";
+    hint.style.fontSize = "12px";
+    document.body.appendChild(hint);
+  }
+</script>
+  
 <script>
   EJS_threads = false;
   EJS_startOnLoaded = false;
