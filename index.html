@@ -10,13 +10,30 @@
   EJS_threads = false;
 
   EJS_player = "#game";
-  EJS_core = "gba";
+  EJS_core = "gba"; // ou "gb"
   EJS_gameUrl = "roms/pokred.zip";
   EJS_pathtodata = "data/";
 
   EJS_dontExtractRom = false;
   EJS_controlScheme = "touch";
+
+  /* UX MOBILE */
+  EJS_alignStartButton = "center";
+  EJS_startButtonName = "Jogar";
+  EJS_startOnLoaded = true;
+  EJS_fullscreenOnLoaded = true;
+  EJS_backgroundColor = "#000";
+
+  /* Controles maiores no iOS */
+  if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+    EJS_VirtualGamepadSettings = {
+      scale: 2.2,
+      buttonSize: 110,
+      joystickSize: 190
+    };
+  }
 </script>
+
 
 
   <script src="data/loader.js"></script>
