@@ -1,63 +1,60 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>SNES NFC</title>
+  <meta charset="UTF-8">
+  <title>Pokémon Red GBA</title>
 
-<script>
-  EJS_DEBUG_XX = true;
-  EJS_threads = false;
-  EJS_player = "#game";
-  EJS_core = "snes";
-  EJS_gameUrl = "roms/smw.smc";
-  EJS_pathtodata = "EmulatorJS-main/data/";
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-  // 🔴 deixa o emulador iniciar sozinho
-  EJS_startOnLoaded = true;
-  EJS_fullscreenOnLoaded = false;
-</script>
+  <script>
+    /* 🔧 CONFIGURAÇÕES ESSENCIAIS */
+    EJS_DEBUG_XX = false;
+    EJS_threads = false; // obrigatório no GitHub Pages
 
-<script src="EmulatorJS-main/data/loader.js"></script>
+    /* 🎮 EMULADOR */
+    EJS_player = "#game";
+    EJS_core = "gba";
+    EJS_gameUrl = "roms/pokered.gba";
+    EJS_pathtodata = "EmulatorJS-main/data/";
 
-<style>
-html, body {
-  margin: 0;
-  background: black;
-  height: 100%;
-  overflow: hidden;
-}
-#game {
-  width: 100vw;
-  height: 100vh;
-}
-#overlay {
-  position: fixed;
-  inset: 0;
-  background: black;
-  color: white;
-  font-size: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10;
-}
-</style>
+    /* 🎮 CONTROLES TOUCH */
+    EJS_controlScheme = "touch";
+
+    /* 📱 CONTROLES GRANDES NO iOS */
+    if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+      EJS_VirtualGamepadSettings = {
+        scale: 2.2,
+        buttonSize: 110,
+        joystickSize: 190,
+        spacing: 24
+      };
+    } else {
+      EJS_VirtualGamepadSettings = {
+        scale: 1.6
+      };
+    }
+  </script>
+
+  <!-- Loader LOCAL -->
+  <script src="EmulatorJS-main/data/loader.js"></script>
+
+  <style>
+    html, body {
+      margin: 0;
+      background: black;
+      height: 100%;
+      overflow: hidden;
+      touch-action: none;
+    }
+    #game {
+      width: 100vw;
+      height: 100vh;
+    }
+  </style>
 </head>
-
 <body>
 
-<div id="overlay">▶ TOCAR PARA JOGAR</div>
-<div id="game"></div>
-
-<script>
-document.getElementById("overlay").addEventListener("click", () => {
-  // gesto do usuário (obrigatório no Android)
-  document.getElementById("overlay").remove();
-
-  // fullscreen só após toque
-  document.documentElement.requestFullscreen?.();
-});
-</script>
+  <div id="game"></div>
 
 </body>
 </html>
