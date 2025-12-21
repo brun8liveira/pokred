@@ -1,18 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Teste Final</title>
-
-<script>
-EJS_player = "#game";
-EJS_core = "gba";
-EJS_gameUrl = "roms/pokred.gba";
-EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
-EJS_threads = false;
-</script>
-
-<script src="https://cdn.emulatorjs.org/stable/loader.js"></script>
+<title>Pokémon GBA</title>
 
 <style>
 html, body {
@@ -24,10 +14,42 @@ html, body {
   width: 100vw;
   height: 100vh;
 }
+#start {
+  position: fixed;
+  inset: 0;
+  background: black;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 10;
+}
 </style>
 </head>
 
 <body>
-  <div id="game"></div>
+
+<div id="start">▶ Toque para jogar</div>
+<div id="game"></div>
+
+<script>
+document.getElementById("start").onclick = () => {
+
+  document.getElementById("start").remove();
+
+  window.EJS_player = "#game";
+  window.EJS_core = "gba";
+  window.EJS_gameUrl = "roms/pokred.gba";
+  window.EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
+  window.EJS_threads = false;
+
+  const script = document.createElement("script");
+  script.src = "https://cdn.emulatorjs.org/stable/loader.js";
+  document.body.appendChild(script);
+};
+</script>
+
 </body>
 </html>
