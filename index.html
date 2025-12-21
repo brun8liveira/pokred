@@ -12,13 +12,11 @@ html, body {
   overflow: hidden;
 }
 
-/* Área do emulador */
 #game {
   width: 100vw;
   height: 100vh;
 }
 
-/* Tela de início */
 #start {
   position: fixed;
   inset: 0;
@@ -32,18 +30,16 @@ html, body {
   z-index: 10;
 }
 
-/* Botão grande */
 #start button {
-  font-size: 26px;
-  padding: 24px 40px;
-  border-radius: 12px;
+  font-size: 28px;
+  padding: 26px 44px;
+  border-radius: 14px;
   border: none;
   background: #1abc9c;
   color: black;
   font-weight: bold;
 }
 
-/* Texto de carregamento */
 #loading {
   margin-top: 20px;
   font-size: 18px;
@@ -65,7 +61,7 @@ html, body {
 <script>
 document.getElementById("play").addEventListener("click", async () => {
 
-  // 🔓 Libera áudio (OBRIGATÓRIO no iOS)
+  // 🔓 desbloqueia áudio no iOS
   const AudioContext = window.AudioContext || window.webkitAudioContext;
   const audioCtx = new AudioContext();
   await audioCtx.resume();
@@ -73,7 +69,7 @@ document.getElementById("play").addEventListener("click", async () => {
   document.getElementById("play").style.display = "none";
   document.getElementById("loading").style.display = "block";
 
-  // ⏱️ Delay real necessário no Safari
+  // ⏱️ delay MAIOR (essencial no iOS)
   setTimeout(() => {
 
     window.EJS_player = "#game";
@@ -81,17 +77,19 @@ document.getElementById("play").addEventListener("click", async () => {
     window.EJS_gameUrl = "roms/pokred.gba";
     window.EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
     window.EJS_threads = false;
+    window.EJS_startOnLoaded = true;
 
     const script = document.createElement("script");
     script.src = "https://cdn.emulatorjs.org/stable/loader.js";
     document.body.appendChild(script);
 
-    // remove overlay após iniciar
+    // 🕒 só remove a tela inicial depois de verdade
     setTimeout(() => {
-      document.getElementById("start").remove();
-    }, 2000);
+      const start = document.getElementById("start");
+      if (start) start.remove();
+    }, 4000);
 
-  }, 500);
+  }, 1000);
 });
 </script>
 
