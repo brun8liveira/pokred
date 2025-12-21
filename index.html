@@ -1,81 +1,35 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Pokémon Red GBA</title>
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"> 
+<meta charset="UTF-8">
+<title>Pokémon GBA</title>
 
 <script>
-  document.addEventListener("click", function () {
-    const isiOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-
-    if (!isiOS && !document.fullscreenElement) {
-      document.documentElement.requestFullscreen().catch(() => {});
-    }
-  }, { once: true });
-</script>
-  
-<script>
-  if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-    const hint = document.createElement("div");
-    hint.innerText = "💡 No iPhone, jogue na horizontal para melhor experiência";
-    hint.style.position = "fixed";
-    hint.style.bottom = "10px";
-    hint.style.width = "100%";
-    hint.style.textAlign = "center";
-    hint.style.color = "#aaa";
-    hint.style.fontSize = "12px";
-    document.body.appendChild(hint);
-  }
-</script>
-  
-<script>
-  EJS_threads = false;
-  EJS_startOnLoaded = false;
-  EJS_fullscreenOnLoaded = false;
   EJS_player = "#game";
   EJS_core = "gba";
   EJS_gameUrl = "roms/pokred.zip";
-  EJS_pathtodata = "data/";
-
-  EJS_dontExtractRom = false;
-  EJS_controlScheme = "touch";
-
-  /* UX correta mobile */
-  EJS_alignStartButton = "center";
-  EJS_startButtonName = "▶ Tocar para jogar";
+  EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
   EJS_startOnLoaded = false;
   EJS_fullscreenOnLoaded = false;
-
-  EJS_backgroundColor = "#000";
-
-  /* Controles maiores no iOS */
-  if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-    EJS_VirtualGamepadSettings = {
-      scale: 2.4,
-      buttonSize: 120,
-      joystickSize: 200
-    };
-  }
+  EJS_threads = false;
 </script>
 
-  <script src="data/loader.js"></script>
+<script src="https://cdn.emulatorjs.org/stable/loader.js"></script>
 
-  <style>
-    html, body {
-      margin: 0;
-      background: black;
-      height: 100%;
-      overflow: hidden;
-    }
-    #game {
-      width: 100vw;
-      height: 100vh;
-    }
-  </style>
+<style>
+html, body {
+  margin: 0;
+  background: black;
+  height: 100%;
+}
+#game {
+  width: 100vw;
+  height: 100vh;
+}
+</style>
 </head>
+
 <body>
-  <div id="game"></div>
+<div id="game"></div>
 </body>
 </html>
