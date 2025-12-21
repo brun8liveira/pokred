@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>SNES NFC</title>
+
+<script>
+  EJS_DEBUG_XX = true;
+  EJS_threads = false;
+  EJS_player = "#game";
+  EJS_core = "snes";
+  EJS_gameUrl = "roms/smw.smc";
+  EJS_pathtodata = "EmulatorJS-main/data/";
+
+  // 🔴 deixa o emulador iniciar sozinho
+  EJS_startOnLoaded = true;
+  EJS_fullscreenOnLoaded = false;
+</script>
+
+<script src="EmulatorJS-main/data/loader.js"></script>
+
+<style>
+html, body {
+  margin: 0;
+  background: black;
+  height: 100%;
+  overflow: hidden;
+}
+#game {
+  width: 100vw;
+  height: 100vh;
+}
+#overlay {
+  position: fixed;
+  inset: 0;
+  background: black;
+  color: white;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+</style>
+</head>
+
+<body>
+
+<div id="overlay">▶ TOCAR PARA JOGAR</div>
+<div id="game"></div>
+
+<script>
+document.getElementById("overlay").addEventListener("click", () => {
+  // gesto do usuário (obrigatório no Android)
+  document.getElementById("overlay").remove();
+
+  // fullscreen só após toque
+  document.documentElement.requestFullscreen?.();
+});
+</script>
+
+</body>
+</html>
