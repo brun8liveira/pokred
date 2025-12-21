@@ -9,46 +9,76 @@ html, body {
   margin: 0;
   background: black;
   height: 100%;
+  overflow: hidden;
 }
+
+/* Área do emulador */
 #game {
   width: 100vw;
   height: 100vh;
 }
+
+/* Tela de início */
 #start {
   position: fixed;
   inset: 0;
   background: black;
   color: white;
-  font-size: 22px;
+  font-family: Arial, sans-serif;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   z-index: 10;
+}
+
+/* Botão grande */
+#start button {
+  font-size: 26px;
+  padding: 24px 40px;
+  border-radius: 12px;
+  border: none;
+  background: #1abc9c;
+  color: black;
+  font-weight: bold;
+}
+
+/* Texto de carregamento */
+#loading {
+  margin-top: 20px;
+  font-size: 18px;
+  opacity: 0.8;
+  display: none;
 }
 </style>
 </head>
 
 <body>
 
-<div id="start">▶ Toque para jogar</div>
+<div id="start">
+  <button id="play">▶ Toque para jogar</button>
+  <div id="loading">Carregando jogo…</div>
+</div>
+
 <div id="game"></div>
 
 <script>
-document.getElementById("start").addEventListener("click", async () => {
+document.getElementById("play").addEventListener("click", async () => {
 
-  // 🔓 Desbloqueia áudio (OBRIGATÓRIO no iOS)
+  // 🔓 Libera áudio (OBRIGATÓRIO no iOS)
   const AudioContext = window.AudioContext || window.webkitAudioContext;
   const audioCtx = new AudioContext();
   await audioCtx.resume();
 
-  document.getElementById("start").remove();
+  document.getElementById("play").style.display = "none";
+  document.getElementById("loading").style.display = "block";
 
-  // ⏱️ Delay necessário pro Safari
+  // ⏱️ Delay real necessário no Safari
   setTimeout(() => {
 
     window.EJS_player = "#game";
     window.EJS_core = "gba";
-    window.EJS_gameUrl = "roms/pokred.zip";
+    window.EJS_gameUrl = "roms/pokred.zip"; // ZIP SEM COMPRESSÃO
     window.EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
     window.EJS_threads = false;
 
@@ -56,7 +86,12 @@ document.getElementById("start").addEventListener("click", async () => {
     script.src = "https://cdn.emulatorjs.org/stable/loader.js";
     document.body.appendChild(script);
 
-  }, 300);
+    // remove overlay após iniciar
+    setTimeout(() => {
+      document.getElementById("start").remove();
+    }, 2000);
+
+  }, 500);
 });
 </script>
 
