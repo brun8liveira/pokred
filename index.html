@@ -4,39 +4,20 @@
   <meta charset="UTF-8">
   <title>Pokémon Red GBA</title>
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
   <script>
-    /* 🔧 CONFIGURAÇÕES ESSENCIAIS */
-    EJS_DEBUG_XX = false;
-    EJS_threads = false; // obrigatório no GitHub Pages
+    EJS_threads = false;
 
-    /* 🎮 EMULADOR */
     EJS_player = "#game";
     EJS_core = "gba";
     EJS_gameUrl = "roms/pokred.gba";
-    EJS_pathtodata = "EmulatorJS-main/data/";
+    EJS_pathtodata = "data/";
 
-    /* 🎮 CONTROLES TOUCH */
     EJS_controlScheme = "touch";
-
-    /* 📱 CONTROLES GRANDES NO iOS */
-    if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-      EJS_VirtualGamepadSettings = {
-        scale: 2.2,
-        buttonSize: 110,
-        joystickSize: 190,
-        spacing: 24
-      };
-    } else {
-      EJS_VirtualGamepadSettings = {
-        scale: 1.6
-      };
-    }
   </script>
 
-  <!-- Loader LOCAL -->
-  <script src="EmulatorJS-main/data/loader.js"></script>
+  <script src="data/loader.js"></script>
 
   <style>
     html, body {
@@ -44,7 +25,6 @@
       background: black;
       height: 100%;
       overflow: hidden;
-      touch-action: none;
     }
     #game {
       width: 100vw;
@@ -53,8 +33,6 @@
   </style>
 </head>
 <body>
-
   <div id="game"></div>
-
 </body>
 </html>
