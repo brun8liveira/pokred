@@ -9,6 +9,7 @@ html, body {
   margin: 0;
   background: black;
   height: 100%;
+  overflow: hidden;
 }
 #game {
   width: 100vw;
@@ -19,14 +20,31 @@ html, body {
   inset: 0;
   background: black;
   color: white;
+  font-size: 26px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
-  cursor: pointer;
   z-index: 10;
+  cursor: pointer;
 }
 </style>
+
+<script>
+/* CONFIGURAÇÃO GLOBAL (ANTES DO LOADER) */
+window.EJS_player = "#game";
+window.EJS_core = "gba";
+window.EJS_gameUrl = "roms/pokred.gba";
+window.EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
+window.EJS_threads = false;
+window.EJS_startOnLoaded = false;
+
+/* trava o início automático */
+window.EJS_ready = function () {
+  window.EJS_emulator.stop();
+};
+</script>
+
+<script src="https://cdn.emulatorjs.org/stable/loader.js"></script>
 </head>
 
 <body>
@@ -35,19 +53,17 @@ html, body {
 <div id="game"></div>
 
 <script>
-document.getElementById("start").onclick = () => {
+document.getElementById("start").onclick = async () => {
+
+  /* desbloqueia áudio (iOS) */
+  const AudioContext = window.AudioContext || window.webkitAudioContext;
+  const audioCtx = new AudioContext();
+  await audioCtx.resume();
 
   document.getElementById("start").remove();
 
-  window.EJS_player = "#game";
-  window.EJS_core = "gba";
-  window.EJS_gameUrl = "roms/pokred.gba";
-  window.EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
-  window.EJS_threads = false;
-
-  const script = document.createElement("script");
-  script.src = "https://cdn.emulatorjs.org/stable/loader.js";
-  document.body.appendChild(script);
+  /* agora sim inicia o jogo */
+  window.EJS_emulator.start();
 };
 </script>
 
