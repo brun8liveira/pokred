@@ -2,96 +2,32 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Pokémon GBA</title>
+<title>Teste GBA</title>
+
+<script>
+  EJS_player = "#game";
+  EJS_core = "gba";
+  EJS_gameUrl = "roms/pokred.gba";
+  EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
+  EJS_threads = false;
+</script>
+
+<script src="https://cdn.emulatorjs.org/stable/loader.js"></script>
 
 <style>
 html, body {
   margin: 0;
   background: black;
   height: 100%;
-  overflow: hidden;
 }
-
 #game {
   width: 100vw;
   height: 100vh;
-}
-
-#start {
-  position: fixed;
-  inset: 0;
-  background: black;
-  color: white;
-  font-family: Arial, sans-serif;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  z-index: 10;
-}
-
-#start button {
-  font-size: 28px;
-  padding: 26px 44px;
-  border-radius: 14px;
-  border: none;
-  background: #1abc9c;
-  color: black;
-  font-weight: bold;
-}
-
-#loading {
-  margin-top: 20px;
-  font-size: 18px;
-  opacity: 0.8;
-  display: none;
 }
 </style>
 </head>
 
 <body>
-
-<div id="start">
-  <button id="play">▶ Toque para jogar</button>
-  <div id="loading">Carregando jogo…</div>
-</div>
-
-<div id="game"></div>
-
-<script>
-document.getElementById("play").addEventListener("click", async () => {
-
-  // 🔓 desbloqueia áudio no iOS
-  const AudioContext = window.AudioContext || window.webkitAudioContext;
-  const audioCtx = new AudioContext();
-  await audioCtx.resume();
-
-  document.getElementById("play").style.display = "none";
-  document.getElementById("loading").style.display = "block";
-
-  // ⏱️ delay MAIOR (essencial no iOS)
-  setTimeout(() => {
-
-    window.EJS_player = "#game";
-    window.EJS_core = "gba";
-    window.EJS_gameUrl = "roms/pokred.gba";
-    window.EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
-    window.EJS_threads = false;
-    window.EJS_startOnLoaded = true;
-
-    const script = document.createElement("script");
-    script.src = "https://cdn.emulatorjs.org/stable/loader.js";
-    document.body.appendChild(script);
-
-    // 🕒 só remove a tela inicial depois de verdade
-    setTimeout(() => {
-      const start = document.getElementById("start");
-      if (start) start.remove();
-    }, 4000);
-
-  }, 1000);
-});
-</script>
-
+  <div id="game"></div>
 </body>
 </html>
