@@ -14,60 +14,27 @@
         background: black;
         overflow: hidden;
     }
-
     #game {
         width: 100vw;
         height: 100vh;
         background: black;
-        display: none; /* escondido até clicar */
-    }
-
-    /* BOTÃO JOGAR CENTRALIZADO */
-    #start-btn {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        padding: 18px 32px;
-        font-size: 20px;
-        font-weight: bold;
-        background: #ff0000;
-        color: white;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-        z-index: 9999;
+        display: block;
     }
 </style>
 
 <script>
     // Configurações do EmulatorJS
     EJS_player = "#game";
-    EJS_core = "gba";
-    EJS_pathtodata = "data/";
-    EJS_gameUrl = "roms/pokred.gba";
-    EJS_dontExtractRom = true;
+    EJS_core = "gba";                      // Emulador Game Boy Color
+    EJS_pathtodata = "data/";             // Pasta data
+    EJS_gameUrl = "roms/pokred.gba";  // ROM (não zipada!)
+    EJS_dontExtractRom = true;            // Necessário para iOS
 
-    // INICIAR EM APENAS 1 CLIQUE (OBRIGATÓRIO NO iOS)
-    function startGame() {
-
-        // FULLSCREEN
+    // Fullscreen automático no primeiro toque
+    document.addEventListener("click", () => {
         const doc = document.documentElement;
         if (doc.requestFullscreen) doc.requestFullscreen();
-
-        // Esconde botão
-        document.getElementById("start-btn").style.display = "none";
-
-        // Mostra o canvas
-        document.getElementById("game").style.display = "block";
-
-        // Inicia o EmulatorJS
-        setTimeout(() => {
-            if (window.EJS_emulator && EJS_emulator.resumeAudio) {
-                EJS_emulator.resumeAudio();
-            }
-        }, 500);
-    }
+    }, { once: true });
 </script>
 
 <!-- Carrega o EmulatorJS -->
@@ -75,11 +42,6 @@
 </head>
 
 <body>
-
-<!-- BOTÃO CENTRALIZADO -->
-<button id="start-btn" onclick="startGame()">Toque para jogar!</button>
-
 <div id="game"></div>
-
 </body>
 </html>
