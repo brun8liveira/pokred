@@ -19,16 +19,18 @@
         width: 100vw;
         height: 100vh;
         background: black;
-        display: none; /* só mostra depois de apertar jogar */
+        display: none; /* escondido até clicar */
     }
 
-    #play-btn {
+    /* BOTÃO JOGAR CENTRALIZADO */
+    #start-btn {
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        padding: 16px 32px;
-        font-size: 22px;
+        padding: 18px 32px;
+        font-size: 20px;
+        font-weight: bold;
         background: #ff0000;
         color: white;
         border: none;
@@ -39,37 +41,43 @@
 </style>
 
 <script>
-    // CONFIG DO EMULADORJS
+    // Configurações do EmulatorJS
     EJS_player = "#game";
     EJS_core = "gba";
     EJS_pathtodata = "data/";
-    EJS_gameUrl = "roms/pokred.bin"; // sua ROM descompactada
-    EJS_dontExtractRom = true;    
+    EJS_gameUrl = "roms/pokred.gba";
+    EJS_dontExtractRom = true;
 
-    // Quando clicar em "Jogar"
+    // INICIAR EM APENAS 1 CLIQUE (OBRIGATÓRIO NO iOS)
     function startGame() {
 
-        // esconder botão
-        document.getElementById('play-btn').style.display = "none";
-
-        // mostrar emulador
-        document.getElementById('game').style.display = "block";
-
-        // fullscreen
+        // FULLSCREEN
         const doc = document.documentElement;
         if (doc.requestFullscreen) doc.requestFullscreen();
 
-        // carregar EmulatorJS
-        let s = document.createElement("script");
-        s.src = "data/loader.js";
-        document.body.appendChild(s);
+        // Esconde botão
+        document.getElementById("start-btn").style.display = "none";
+
+        // Mostra o canvas
+        document.getElementById("game").style.display = "block";
+
+        // Inicia o EmulatorJS
+        setTimeout(() => {
+            if (window.EJS_emulator && EJS_emulator.resumeAudio) {
+                EJS_emulator.resumeAudio();
+            }
+        }, 500);
     }
 </script>
 
+<!-- Carrega o EmulatorJS -->
+<script src="data/loader.js"></script>
 </head>
+
 <body>
 
-<button id="play-btn" onclick="startGame()">Jogar</button>
+<!-- BOTÃO CENTRALIZADO -->
+<button id="start-btn" onclick="startGame()">JOGAR</button>
 
 <div id="game"></div>
 
