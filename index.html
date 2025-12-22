@@ -1,78 +1,47 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Pokémon Red GBA</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+<title>Pokémon Red (GBC)</title>
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"> 
-
-<script>
-  document.addEventListener("click", function () {
-    const isiOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-
-    if (!isiOS && !document.fullscreenElement) {
-      document.documentElement.requestFullscreen().catch(() => {});
-    }
-  }, { once: true });
-</script>
-  
-<script>
-  if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-    const hint = document.createElement("div");
-    hint.innerText = "💡 No iPhone, jogue na horizontal para melhor experiência";
-    hint.style.position = "fixed";
-    hint.style.bottom = "10px";
-    hint.style.width = "100%";
-    hint.style.textAlign = "center";
-    hint.style.color = "#aaa";
-    hint.style.fontSize = "12px";
-    document.body.appendChild(hint);
-  }
-</script>
-  
-<script>
-
-  EJS_player = "#game";
-  EJS_core = "gba";
-  EJS_gameUrl = "roms/pokred.bin"; 
-  EJS_pathtodata = "data/";
-  EJS_dontExtractRom = true;
-  EJS_controlScheme = "touch";
-
-  /* UX correta mobile */
-  EJS_alignStartButton = "center";
-  EJS_startButtonName = "▶ Tocar para jogar";
-  EJS_startOnLoaded = false;
-  EJS_fullscreenOnLoaded = false;
-
-  EJS_backgroundColor = "#000";
-
-  /* Controles maiores no iOS */
-  if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-    EJS_VirtualGamepadSettings = {
-      scale: 2.4,
-      buttonSize: 120,
-      joystickSize: 200
-    };
-  }
-</script>
-
-  <script src="data/loader.js"></script>
-
-  <style>
+<style>
     html, body {
-      margin: 0;
-      background: black;
-      height: 100%;
-      overflow: hidden;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        background: black;
+        overflow: hidden;
     }
     #game {
-      width: 100vw;
-      height: 100vh;
+        width: 100vw;
+        height: 100vh;
+        background: black;
+        display: block;
     }
-  </style>
+</style>
+
+<script>
+    // Configurações do EmulatorJS
+    EJS_player = "#game";
+    EJS_core = "gbc";                      // Emulador Game Boy Color
+    EJS_pathtodata = "data/";             // Pasta data
+    EJS_gameUrl = "roms/pokemon_red.gb";  // ROM (não zipada!)
+    EJS_dontExtractRom = true;            // Necessário para iOS
+
+    // Fullscreen automático no primeiro toque
+    document.addEventListener("click", () => {
+        const doc = document.documentElement;
+        if (doc.requestFullscreen) doc.requestFullscreen();
+    }, { once: true });
+</script>
+
+<!-- Carrega o EmulatorJS -->
+<script src="data/loader.js"></script>
 </head>
+
 <body>
-  <div id="game"></div>
+<div id="game"></div>
 </body>
 </html>
