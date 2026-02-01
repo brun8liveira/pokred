@@ -11,6 +11,7 @@
       background: black;
       height: 100%;
       overflow: hidden;
+      touch-action: none; /* evita scroll em mobile */
     }
 
     #game {
@@ -18,11 +19,11 @@
       height: 100vh;
     }
 
-    /* Overlay de toque */
+    /* Overlay de toque (seu) */
     #overlay {
       position: fixed;
       inset: 0;
-      background: black;
+      background: rgba(0,0,0,0.9);
       color: white;
       font-size: 24px;
       display: flex;
@@ -30,16 +31,28 @@
       justify-content: center;
       z-index: 10;
       cursor: pointer;
+      text-align: center;
+    }
+
+    #overlay span {
+      padding: 18px 28px;
+      background: #222;
+      border: 2px solid #fff;
+      border-radius: 10px;
+    }
+
+    #overlay:hover span {
+      background: #333;
     }
   </style>
 
   <script>
-    // Configuração do EmulatorJS (sem auto-start)
+    // Config EmulatorJS – SEM auto-start
     EJS_player = "#game";
     EJS_core = "gba";                       // Game Boy Advance
     EJS_gameUrl = "roms/pokred.gba";       // sua ROM
     EJS_pathtodata = "https://cdn.emulatorjs.org/latest/data/";
-    EJS_startOnLoaded = false;             // IMPORTANTE: não iniciar sozinho
+    EJS_startOnLoaded = false;             // não iniciar sozinho
     EJS_fullscreenOnLoaded = false;
   </script>
 
@@ -47,14 +60,15 @@
 </head>
 <body>
 
-  <div id="overlay">▶ TOCAR PARA JOGAR</div>
+  <!-- Seu overlay único -->
+  <div id="overlay"><span>▶ TOCAR PARA JOGAR</span></div>
   <div id="game"></div>
 
   <script>
     const overlay = document.getElementById("overlay");
 
     overlay.addEventListener("click", async () => {
-      // 1. Fullscreen (no mesmo gesto)
+      // 1. Tentar fullscreen no mesmo gesto
       const docEl = document.documentElement;
       if (docEl.requestFullscreen) {
         try {
@@ -64,11 +78,19 @@
         }
       }
 
-      // 2. Remover overlay
+      // 2. Remover seu overlay
       overlay.remove();
 
-      // 3. Iniciar o emulador manualmente
-      // Nas versões novas, o start fica em window.EJS_start ou semelhante.
+      // 3. Se o EmulatorJS criou algum overlay próprio, remove também
+      // (algumas builds adicionam um botão de "Play")
+      try {
+        const ejsOverlay = document.querySelector(".EJS_startOverlay, .ejs-start-overlay, .ejs_overlay");
+        if (ejsOverlay) ejsOverlay.remove();
+      } catch (e) {
+        console.log("Nenhum overlay interno para remover:", e);
+      }
+
+      // 4. Iniciar o emulador manualmente
       try {
         if (window.EJS_start) {
           window.EJS_start();
@@ -79,6 +101,10 @@
         console.log("Erro ao iniciar o emulador:", e);
       }
     });
+
+    // Extra: bloquear scroll por gesto (fallback)
+    function blockScroll(e) { e.preventDefault(); }
+    window.addEventListener('touchmove', blockScroll, { passive: false });
   </script>
 
 </body>
