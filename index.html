@@ -5,30 +5,6 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
 <title>Pokémon Red (GBA)</title>
 
-<style>
-    html, body {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        height: 100%;
-        background: black;
-        overflow: hidden;
-    }
-    #game {
-        width: 100vw;
-        height: 100vh;
-        background: black;
-        display: block;
-    }
-    .ejs_start_button {
-    position: absolute !important;
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) !important;
-    z-index: 9999 !important;
-}
-</style>
-
   <script>
     EJS_player = "#game";
     EJS_core = "gba";                          // Game Boy Advance
@@ -39,9 +15,36 @@
   </script>
 
   <script src="https://cdn.emulatorjs.org/latest/data/loader.js"></script>
+    
+<style>
+  html, body {
+    margin: 0;
+    background: black;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  #game {
+    width: 100vw;
+    height: 100vh;
+  }
+
+  /* Overlay de toque */
+  #overlay {
+    position: fixed;
+    inset: 0;
+    background: black;
+    color: white;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    cursor: pointer;
+  }
+</style>
 </head>
 
-<body>
 <body>
   <div id="overlay">▶ TOCAR PARA JOGAR</div>
   <div id="game"></div>
@@ -53,6 +56,5 @@
       document.documentElement.requestFullscreen?.();
     });
   </script>
-</body>
 </body>
 </html>
