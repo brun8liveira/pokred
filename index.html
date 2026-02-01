@@ -29,23 +29,16 @@
 }
 </style>
 
-<script>
-    // Configurações do EmulatorJS
+  <script>
     EJS_player = "#game";
-    EJS_core = "gba";                      // Emulador Game Boy Color
-    EJS_pathtodata = "data/";             // Pasta data
-    EJS_gameUrl = "roms/pokred.gba";  // ROM (não zipada!)
-    EJS_dontExtractRom = true;            // Necessário para iOS
+    EJS_core = "gba";                          // Game Boy Advance
+    EJS_gameUrl = "roms/pokred.gba";        // ajuste o nome da sua ROM
+    EJS_pathtodata = "https://cdn.emulatorjs.org/latest/data/";
+    EJS_startOnLoaded = true;
+    EJS_fullscreenOnLoaded = false;
+  </script>
 
-    // Fullscreen automático no primeiro toque
-    document.addEventListener("click", () => {
-        const doc = document.documentElement;
-        if (doc.requestFullscreen) doc.requestFullscreen();
-    }, { once: true });
-</script>
-
-<!-- Carrega o EmulatorJS -->
-<script src="data/loader.js"></script>
+  <script src="https://cdn.emulatorjs.org/latest/data/loader.js"></script>
 </head>
 
 <body>
