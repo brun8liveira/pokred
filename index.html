@@ -1,60 +1,85 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
-<title>Pokémon Red (GBA)</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+  <title>Pokémon Red (GBA)</title>
+
+  <style>
+    html, body {
+      margin: 0;
+      background: black;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    #game {
+      width: 100vw;
+      height: 100vh;
+    }
+
+    /* Overlay de toque */
+    #overlay {
+      position: fixed;
+      inset: 0;
+      background: black;
+      color: white;
+      font-size: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      cursor: pointer;
+    }
+  </style>
 
   <script>
+    // Configuração do EmulatorJS (sem auto-start)
     EJS_player = "#game";
-    EJS_core = "gba";                          // Game Boy Advance
-    EJS_gameUrl = "roms/pokred.gba";        // ajuste o nome da sua ROM
+    EJS_core = "gba";                       // Game Boy Advance
+    EJS_gameUrl = "roms/pokred.gba";       // sua ROM
     EJS_pathtodata = "https://cdn.emulatorjs.org/latest/data/";
-    EJS_startOnLoaded = true;
+    EJS_startOnLoaded = false;             // IMPORTANTE: não iniciar sozinho
     EJS_fullscreenOnLoaded = false;
   </script>
 
   <script src="https://cdn.emulatorjs.org/latest/data/loader.js"></script>
-    
-<style>
-  html, body {
-    margin: 0;
-    background: black;
-    height: 100%;
-    overflow: hidden;
-  }
-
-  #game {
-    width: 100vw;
-    height: 100vh;
-  }
-
-  /* Overlay de toque */
-  #overlay {
-    position: fixed;
-    inset: 0;
-    background: black;
-    color: white;
-    font-size: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 10;
-    cursor: pointer;
-  }
-</style>
 </head>
-
 <body>
+
   <div id="overlay">▶ TOCAR PARA JOGAR</div>
   <div id="game"></div>
 
   <script>
     const overlay = document.getElementById("overlay");
-    overlay.addEventListener("click", () => {
+
+    overlay.addEventListener("click", async () => {
+      // 1. Fullscreen (no mesmo gesto)
+      const docEl = document.documentElement;
+      if (docEl.requestFullscreen) {
+        try {
+          await docEl.requestFullscreen();
+        } catch (e) {
+          console.log("Fullscreen falhou:", e);
+        }
+      }
+
+      // 2. Remover overlay
       overlay.remove();
-      document.documentElement.requestFullscreen?.();
+
+      // 3. Iniciar o emulador manualmente
+      // Nas versões novas, o start fica em window.EJS_start ou semelhante.
+      try {
+        if (window.EJS_start) {
+          window.EJS_start();
+        } else if (window.EJS_emulator && window.EJS_emulator.start) {
+          window.EJS_emulator.start();
+        }
+      } catch (e) {
+        console.log("Erro ao iniciar o emulador:", e);
+      }
     });
   </script>
+
 </body>
 </html>
