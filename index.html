@@ -42,6 +42,17 @@
 </head>
 
 <body>
-<div id="game"></div>
+<body>
+  <div id="overlay">▶ TOCAR PARA JOGAR</div>
+  <div id="game"></div>
+
+  <script>
+    const overlay = document.getElementById("overlay");
+    overlay.addEventListener("click", () => {
+      overlay.remove();
+      document.documentElement.requestFullscreen?.();
+    });
+  </script>
+</body>
 </body>
 </html>
